@@ -6,6 +6,7 @@ function App() {
   let [글제목, 글제목변경] = useState(['여자 코트 추천', 'ReactBlog', '네이버 블로그']);
   let [따봉, 따봉변경] = useState([0,10,0]);
   let [modal, setModal] = useState(false);
+  let [title, setTitle] = useState('타이틀');
 
 
   function 함수(){
@@ -22,7 +23,7 @@ function App() {
 
   return (
     <div className="App">
-		<header>ReactBlog</header>
+		<header>{ title }</header>
 		{
 			글제목.map(function(a, i){
 				return(
@@ -43,7 +44,18 @@ function App() {
 			})
 		}
 
-		<input type="text" onChange={() => {console.log(1)}} />
+		<div>
+			<input type="text" id="txtAdd" />
+			<button onClick={(e) => {
+				
+			}}>글추가</button>
+		</div>
+
+		
+		<input type="text" id="hdTitle" />
+		<button onClick={(e) => {
+			setTitle(document.querySelector('#hdTitle').value);
+		}}>적용</button>
 
 		{
 			modal == true? <Modal 글제목={글제목} /> : null
