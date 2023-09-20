@@ -22,6 +22,7 @@ function App() {
 
   return (
     <div className="App">
+		<header>ReactBlog</header>
 		{
 			글제목.map(function(a, i){
 				return(
@@ -41,10 +42,11 @@ function App() {
 				)	
 			})
 		}
-		
+
+		<input type="text" onChange={() => {console.log(1)}} />
 
 		{
-			modal == true? <Modal 글제목={글제목} 글제목변경={글제목변경} /> : null
+			modal == true? <Modal 글제목={글제목} /> : null
 		}
     </div>
   );
