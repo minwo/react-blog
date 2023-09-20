@@ -2,24 +2,24 @@ import "./App.scss";
 import { useState } from "react";
 
 function App() {
-  let post = "강남 우동 맛집";
-  let [글제목, 글제목변경] = useState(['여자 코트 추천', 'ReactBlog', '네이버 블로그']);
-  let [따봉, 따봉변경] = useState([0,10,0]);
-  let [modal, setModal] = useState(false);
-  let [title, setTitle] = useState('타이틀');
+	let post = "강남 우동 맛집";
+	let [글제목, 글제목변경] = useState(['여자 코트 추천', 'ReactBlog', '네이버 블로그']);
+	let [따봉, 따봉변경] = useState([0,10,0]);
+	let [modal, setModal] = useState(false);
+	let [title, setTitle] = useState('타이틀');
+	let [mdTitle, setMdTitle] = useState(0);
+	let currentDate = new Date();
+	let year = currentDate.getFullYear();
+	let month = currentDate.getMonth() + 1; // 월은 0부터 시작하므로 1을 더해줍니다.
+	let day = currentDate.getDate();
+	let dateValue = year + '-' + month + '-' + day;
+  
+	function modalFn(e){
+		if(!modal){
+			setModal(true);
+		}
 
-
-  function 함수(){
-	따봉변경(따봉 + 1);
-  }
-
-  function modalFn(e){
-	if(modal){
-		setModal(false);
-	} else {
-		setModal(true);
 	}
-  }
 
   return (
     <div className="App">
@@ -28,7 +28,7 @@ function App() {
 			글제목.map(function(a, i){
 				return(
 					<div className="list" key={i}>
-						<h4 onClick={(e) =>{modalFn(e)}} data-index={i}>
+						<h4 onClick={(e) =>{modalFn(e); setMdTitle(i)}}>
 							{글제목[i]}
 							<span onClick={(e) => { 
 								e.stopPropagation();
@@ -38,7 +38,15 @@ function App() {
 							}>👍</span>
 							{따봉[i]}
 						</h4>
-						<p>2월17일 발행</p>
+
+						<p>{dateValue}</p>
+
+						<button onClick={() => {
+							let new글제목 = [...글제목];
+							new글제목.splice(i, 1);
+							console.log(new글제목);
+							글제목변경(new글제목);
+						}}>삭제</button>
 					</div>
 				)	
 			})
@@ -47,7 +55,7 @@ function App() {
 		<div>
 			<input type="text" id="txtAdd" />
 			<button onClick={(e) => {
-				
+				글제목변경(prev글제목변경 => [...prev글제목변경, document.querySelector('#txtAdd').value])
 			}}>글추가</button>
 		</div>
 
@@ -58,17 +66,17 @@ function App() {
 		}}>적용</button>
 
 		{
-			modal == true? <Modal 글제목={글제목} /> : null
+			modal == true? <Modal 글제목={글제목} mdTitle={mdTitle} /> : null
 		}
     </div>
   );
 }
 
-function Modal (props,i, fc) {
-	console.log(i);
+function Modal (props) {
+	console.log(props.mdTitle);
 	return (
 		<div className="modal">
-			<h4>{props.글제목}</h4>
+			<h4>{props.글제목[props.mdTitle]}</h4>
 			<p>날짜</p>
 			<p>상세내용</p>
 			<button onClick={() => {}}>글수정</button>
